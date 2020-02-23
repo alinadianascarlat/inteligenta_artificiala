@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ordonarea elementelor unui vector.cpp">
+    <ClCompile Include="CumGenereziNr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

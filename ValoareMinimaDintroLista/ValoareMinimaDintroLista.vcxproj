@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{77FBD52B-64FB-4850-B011-D69556F4BC8E}</ProjectGuid>
+    <ProjectGuid>{B39D6A21-4627-4EBA-8BD3-41831FC28C47}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Ordonareaelementelorunuivector</RootNamespace>
+    <RootNamespace>ValoareMinimaDintroLista</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ordonarea elementelor unui vector.cpp" />
+    <ClCompile Include="ValoareMinimaDintroLista.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
