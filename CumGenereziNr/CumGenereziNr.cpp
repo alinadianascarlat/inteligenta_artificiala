@@ -1,4 +1,4 @@
-// 11. Cum generezi un nr de la 0 la 100
+// 11. Sa se genereze un numar intre 0 si 100 in C.
 
 #include <iostream>
 using namespace std;

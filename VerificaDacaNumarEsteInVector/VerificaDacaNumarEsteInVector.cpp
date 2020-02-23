@@ -1,4 +1,5 @@
-//Verificam daca un nr este intr un vector
+// 2. Se da o lista de numere.Sa se verifice daca un anumit numar exista sau nu in aceasta lista
+
 
 #include <iostream>
 using namespace std;

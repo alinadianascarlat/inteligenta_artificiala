@@ -1,4 +1,4 @@
-//4. Valoarea minima dintr o lista de nr.
+// 4. Gasiti valoarea minima dintr-o lista de numere
 
 #include <iostream>
 using namespace std;
