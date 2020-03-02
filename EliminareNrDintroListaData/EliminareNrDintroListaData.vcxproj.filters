@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EliminareaUnuiNrDePeOPozitie.cpp">
+    <ClCompile Include="EliminareNrDintroListaData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
