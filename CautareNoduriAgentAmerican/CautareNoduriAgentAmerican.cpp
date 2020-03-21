@@ -91,6 +91,20 @@ public:
 
 	void printSolution() {
 		this->printSolutionRec(targetNode);
+		cout << endl;
+	}
+
+	void printTime() {
+		int dist = 0;
+
+		int node = targetNode;
+		
+		while (node != startNode) {
+			dist += a[node][parents[node]];
+			node = parents[node];
+		}
+
+		cout << "Time = " << dist / 80.0 << " hours" << endl;
 	}
 
 private:
@@ -110,9 +124,15 @@ int main()
 	FindPath* findPath = new FindPath();
 	findPath->initializePath(); // initializeaza matricea de adiacenta
 
+	cout << "Breath search" << endl;
 	findPath->breathSearch(); // cauta in latime
 	findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
 
+	findPath->printTime();
+
+	cout << "Depth search" << endl;
 	//findPath->depthSearch(); // cauta solutie in adancime
 	//findPath->printSolution();
+
+	//findPath->printTime();
 }
