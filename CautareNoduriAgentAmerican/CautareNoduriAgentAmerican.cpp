@@ -9,10 +9,10 @@ private:
 	int a[20][20];
 	int parents[20];
 	int startNode = 0;
-	int targetNode = 2;
+	int targetNode = 1;
 
 public:
-	void initializePath() {
+	void initializeAdiacenceMatrix() {
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++) {
 				a[i][j] = 0;
@@ -67,7 +67,6 @@ public:
 
 		while (!solutionFound && nodesTailPos != 0) {
 			int node = nodesTail[0];
-			visitedCities[node] = 1;
 
 			for (int i = 0; i < nodesTailPos; i++) {
 				nodesTail[i] = nodesTail[i + 1];
@@ -83,6 +82,42 @@ public:
 						nodesTail[nodesTailPos] = i;
 						nodesTailPos++;
 						parents[i] = node;
+						visitedCities[node] = 1;
+					}
+				}
+			}
+		}
+	}
+
+	void depthSearch() {
+		int visitedCities[20];
+		int nodesStack[20];
+		int nodesStackPos = 0;
+		bool solutionFound = false;
+
+		for (int i = 0; i < 20; i++) {
+			visitedCities[i] = 0;
+			parents[i] = -1;
+		}
+		nodesStack[nodesStackPos] = startNode; // pleaca din Arad
+		nodesStackPos++;
+		visitedCities[startNode] = 1;
+
+		while (!solutionFound) {
+			int node = nodesStack[nodesStackPos-1];
+			nodesStackPos--;
+			
+			if (node == targetNode) {
+				solutionFound = true;
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++) {
+					if (a[i][node] != 0 && visitedCities[i] == 0) {
+						nodesStack[nodesStackPos] = i;
+						nodesStackPos++;
+						parents[i] = node;
+						visitedCities[i] = 1;
 					}
 				}
 			}
@@ -98,7 +133,7 @@ public:
 		int dist = 0;
 
 		int node = targetNode;
-		
+
 		while (node != startNode) {
 			dist += a[node][parents[node]];
 			node = parents[node];
@@ -117,22 +152,18 @@ private:
 	}
 };
 
-
-
 int main()
 {
 	FindPath* findPath = new FindPath();
-	findPath->initializePath(); // initializeaza matricea de adiacenta
+	findPath->initializeAdiacenceMatrix(); // initializeaza matricea de adiacenta
 
 	cout << "Breath search" << endl;
 	findPath->breathSearch(); // cauta in latime
 	findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
-
 	findPath->printTime();
 
 	cout << "Depth search" << endl;
-	//findPath->depthSearch(); // cauta solutie in adancime
-	//findPath->printSolution();
-
-	//findPath->printTime();
+	findPath->depthSearch(); // cauta solutie in adancime
+	findPath->printSolution();
+	findPath->printTime();
 }
