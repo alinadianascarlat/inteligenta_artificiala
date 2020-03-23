@@ -194,7 +194,10 @@ public:
 			node = parents[node];
 		}
 
-		cout << "Time = " << dist / 80.0 << " hours" << endl;
+		int hours = dist / 80;
+		int minutes = (dist / 80.0 - hours) * 60;
+
+		cout << "Time = " << hours<< " hours end " << minutes <<" minutes"<< endl;
 	}
 
 private:
