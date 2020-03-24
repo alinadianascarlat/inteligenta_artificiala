@@ -7,6 +7,7 @@ private:
 	string names[20] = { "Arad","Bucuresti","Craiova","Drobeta","Eforie","Fagaras","Giurgiu","Harsova",+
 		"Iasi","Lugoj","Mehadia","Neamt","Oradea","Pitesti","Ramnicul Valcea","Sibiu","Timisoara","Urziceni","Vaslui","Zerind" };
 	int a[20][20];
+	int c[20][20];
 	int parents[20];
 	int startNode;
 	int targetNode;
@@ -46,6 +47,41 @@ public:
 			for (int j = 0; j < 20; j++) {
 				if (a[i][j] != 0)
 					a[j][i] = a[i][j];
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 20; j++) {
+				c[i][j] = 0;
+			}
+		}
+		c[0][19] = 800;
+		c[0][15] = 1200;
+		c[0][16] = 1100;
+		c[1][6] = 400;
+		c[1][13] = 101;
+		c[1][5] = 1200;
+		c[1][17] = 700;
+		c[2][13] = 1600;
+		c[2][14] = 1300;
+		c[2][3] = 900;
+		c[3][10] = 600;
+		c[4][7] = 800;
+		c[5][15] = 900;
+		c[7][17] = 900;
+	    c[8][18] = 1200;
+		c[8][11] = 700;
+		c[9][10] = 400;
+		c[9][16] = 1000;
+	    c[12][19] = 700;
+		c[12][15] = 2500;
+		c[13][14] = 1300;
+		c[14][15] = 800;
+		c[17][18] = 1400;
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 20; j++) {
+				if (c[i][j] != 0)
+					c[j][i] = c[i][j];
 			}
 		}
 	}
@@ -186,18 +222,30 @@ public:
 
 	void printTime() {
 		int dist = 0;
+		double totalTime = 0;
 
 		int node = targetNode;
 
 		while (node != startNode) {
 			dist += a[node][parents[node]];
+			
+			double x = (double) c[node][parents[node]] / (double) a[node][parents[node]];
+			double v;
+			if (x >= 10)
+				v = 100.0 * 10.0 / x;
+			else
+				v = 100;
+			totalTime += (double) a[node][parents[node]] / (double) v;
+			
 			node = parents[node];
 		}
 
-		int hours = dist / 80;
-		int minutes = (dist / 80.0 - hours) * 60;
+		cout << "Km parcursi pe ruta gasita: " << dist << endl;
 
-		cout << "Time = " << hours<< " hours end " << minutes <<" minutes"<< endl;
+		int hours = int(totalTime);
+		int minutes = (totalTime - hours) * 60;
+
+		cout << "Timp: " << hours << "h si " << minutes << " minute" << endl;
 	}
 
 private:
