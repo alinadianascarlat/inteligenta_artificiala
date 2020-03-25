@@ -11,6 +11,7 @@ private:
 	int parents[20];
 	int startNode;
 	int targetNode;
+	bool solutionFound;
 
 	void printSolutionRec(int node) {
 		if (node != startNode) {
@@ -132,7 +133,7 @@ public:
 		int visitedCities[20];
 		int nodesTail[20];
 		int nodesTailPos = 0;
-		bool solutionFound = false;
+		solutionFound = false;
 
 		for (int i = 0; i < 20; i++) {
 			visitedCities[i] = 0;
@@ -171,7 +172,7 @@ public:
 		int visitedCities[20];
 		int nodesStack[20];
 		int nodesStackPos = 0;
-		bool solutionFound = false;
+		solutionFound = false;
 
 		for (int i = 0; i < 20; i++) {
 			visitedCities[i] = 0;
@@ -206,7 +207,7 @@ public:
 		int cost[20];
 		int nodesTail[20];
 		int nodesTailPos = 0;
-		bool solutionFound = false;
+		solutionFound = false;
 
 		for (int i = 0; i < 20; i++) {
 			cost[i] = 0;
@@ -242,37 +243,84 @@ public:
 		}
 	}
 
+	void limitedDepthSearch(int limit) {
+		int visitedCities[20];
+		int depth[20];
+		int nodesStack[20];
+		int nodesStackPos = 0;
+		solutionFound = false;
+
+		for (int i = 0; i < 20; i++) {
+			visitedCities[i] = 0;
+			depth[i] = 0;
+			parents[i] = -1;
+		}
+		nodesStack[nodesStackPos] = startNode;
+		nodesStackPos++;
+		visitedCities[startNode] = 1;
+
+		while (!solutionFound && nodesStackPos < 0) {
+			int node = nodesStack[nodesStackPos - 1];
+			nodesStackPos--;
+
+			if (node == targetNode) {
+				solutionFound = true;
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++) {
+					if (a[i][node] != 0 && visitedCities[i] == 0 && depth[node] < limit - 1) {
+						nodesStack[nodesStackPos] = i;
+						nodesStackPos++;
+						parents[i] = node;
+						visitedCities[i] = 1;
+						depth[i] = depth[node] + 1;
+					}
+				}
+			}
+		}
+
+		solutionFound = solutionFound || nodesStackPos < 0;
+	}
+
 	void printSolution() {
-		this->printSolutionRec(targetNode);
-		cout << endl;
+		if (solutionFound) {
+			this->printSolutionRec(targetNode);
+			cout << endl;
+		}
+		else {
+			cout << "Nu exista solutie!" << endl;
+		}
 	}
 
 	void printTime() {
-		int dist = 0;
-		double totalTime = 0;
+		if (solutionFound) {
+			int dist = 0;
+			double totalTime = 0;
 
-		int node = targetNode;
+			int node = targetNode;
 
-		while (node != startNode) {
-			dist += a[node][parents[node]];
-			
-			double x = (double) c[node][parents[node]] / (double) a[node][parents[node]];
-			double v;
-			if (x >= 10)
-				v = 100.0 * 10.0 / x;
-			else
-				v = 100;
-			totalTime += (double) a[node][parents[node]] / (double) v;
-			
-			node = parents[node];
+			while (node != startNode) {
+				dist += a[node][parents[node]];
+
+				double x = (double)c[node][parents[node]] / (double)a[node][parents[node]];
+				double v;
+				if (x >= 10)
+					v = 100.0 * 10.0 / x;
+				else
+					v = 100;
+				totalTime += (double)a[node][parents[node]] / (double)v;
+
+				node = parents[node];
+			}
+
+			cout << "Km parcursi pe ruta gasita: " << dist << endl;
+
+			int hours = int(totalTime);
+			int minutes = (totalTime - hours) * 60;
+
+			cout << "Timp: " << hours << "h si " << minutes << " minute" << endl;
 		}
-
-		cout << "Km parcursi pe ruta gasita: " << dist << endl;
-
-		int hours = int(totalTime);
-		int minutes = (totalTime - hours) * 60;
-
-		cout << "Timp: " << hours << "h si " << minutes << " minute" << endl;
 	}
 };
 
@@ -296,6 +344,12 @@ int main()
 
 	cout << "Cautare Cost Uniform" << endl;
 	findPath->costUniform(); // cauta solutie cost uniform
+	findPath->printSolution();
+	findPath->printTime();
+	cout << endl;
+
+	cout << "Cautare limitata in adancime" << endl;
+	findPath->limitedDepthSearch(1); // cauta solutie limitata in adancime
 	findPath->printSolution();
 	findPath->printTime();
 	cout << endl;
