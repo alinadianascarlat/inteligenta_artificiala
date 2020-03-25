@@ -259,7 +259,7 @@ public:
 		nodesStackPos++;
 		visitedCities[startNode] = 1;
 
-		while (!solutionFound && nodesStackPos < 0) {
+		while (!solutionFound && nodesStackPos > 0) {
 			int node = nodesStack[nodesStackPos - 1];
 			nodesStackPos--;
 
@@ -269,7 +269,7 @@ public:
 			else
 			{
 				for (int i = 0; i < 20; i++) {
-					if (a[i][node] != 0 && visitedCities[i] == 0 && depth[node] < limit - 1) {
+					if (a[i][node] != 0 && visitedCities[i] == 0 && depth[node] < limit) {
 						nodesStack[nodesStackPos] = i;
 						nodesStackPos++;
 						parents[i] = node;
@@ -348,8 +348,11 @@ int main()
 	findPath->printTime();
 	cout << endl;
 
+	int limit;
 	cout << "Cautare limitata in adancime" << endl;
-	findPath->limitedDepthSearch(1); // cauta solutie limitata in adancime
+	cout << "Limita pentru cautare in adancime: ";
+	cin >> limit;
+	findPath->limitedDepthSearch(limit); // cauta solutie limitata in adancime
 	findPath->printSolution();
 	findPath->printTime();
 	cout << endl;
