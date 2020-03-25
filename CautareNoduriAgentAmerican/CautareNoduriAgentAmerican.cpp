@@ -12,6 +12,32 @@ private:
 	int startNode;
 	int targetNode;
 
+	void printSolutionRec(int node) {
+		if (node != startNode) {
+			printSolutionRec(parents[node]);
+		}
+
+		cout << names[node] << " ";
+	}
+
+	void sortCostUniform(int *nodesTail, int nodesTailPos, int* cost) {
+		for (int i = 0; i < nodesTailPos; i++) {
+			int min = cost[i];
+			int pozMin = i;
+
+			for (int j = i; j < nodesTailPos; j++) {
+				if (cost[j] < min) {
+					pozMin = j;
+					min = nodesTail[j];
+				}
+			}
+
+			int tmp = nodesTail[i];
+			nodesTail[i] = nodesTail[pozMin];
+			nodesTail[pozMin] = tmp;
+		}
+	}
+
 public:
 	void initializeAdiacenceMatrix() {
 		for (int i = 0; i < 20; i++) {
@@ -192,6 +218,7 @@ public:
 		cost[startNode] = 0;
 
 		while (!solutionFound && nodesTailPos != 0) {
+			sortCostUniform(nodesTail, nodesTailPos, cost);
 			int node = nodesTail[0];
 
 			for (int i = 0; i < nodesTailPos; i++) {
@@ -247,15 +274,6 @@ public:
 
 		cout << "Timp: " << hours << "h si " << minutes << " minute" << endl;
 	}
-
-private:
-	void printSolutionRec(int node) {
-		if (node != startNode) {
-			printSolutionRec(parents[node]);
-		}
-
-		cout << names[node] << " ";
-	}
 };
 
 int main()
@@ -268,14 +286,17 @@ int main()
 	findPath->breathSearch(); // cauta in latime
 	findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
 	findPath->printTime();
+	cout << endl;
 
 	cout << "Cautare in adancime" << endl;
 	findPath->depthSearch(); // cauta solutie in adancime
 	findPath->printSolution();
 	findPath->printTime();
+	cout << endl;
 
 	cout << "Cautare Cost Uniform" << endl;
 	findPath->costUniform(); // cauta solutie cost uniform
 	findPath->printSolution();
 	findPath->printTime();
+	cout << endl;
 }
