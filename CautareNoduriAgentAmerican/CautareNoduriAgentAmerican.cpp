@@ -40,6 +40,8 @@ private:
 	}
 
 public:
+	int iterativeLimit;
+
 	void initializeAdiacenceMatrix() {
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++) {
@@ -283,6 +285,15 @@ public:
 		solutionFound = solutionFound || nodesStackPos < 0;
 	}
 
+	void limitedDepthIterativeSearch() {
+		int limit = 0;
+		while (!solutionFound) {
+			limit++;
+			limitedDepthSearch(limit);
+		}
+		this->iterativeLimit = limit;
+	}
+
 	void printSolution() {
 		if (solutionFound) {
 			this->printSolutionRec(targetNode);
@@ -355,5 +366,12 @@ int main()
 	findPath->limitedDepthSearch(limit); // cauta solutie limitata in adancime
 	findPath->printSolution();
 	findPath->printTime();
+	cout << endl;
+
+	cout << "Cautare cu adancime iterativa" << endl;
+	findPath->limitedDepthIterativeSearch(); 
+	findPath->printSolution();
+	findPath->printTime();
+	cout << "Limita pentru cautarea in adancime iterativa: " << findPath->iterativeLimit;
 	cout << endl;
 }
