@@ -169,18 +169,6 @@ int main()
 	findPath->readStartEndCities();
 	findPath->initializeAdiacenceMatrix(); // initializeaza matricea de adiacenta
 
-	//cout << "Cautare in latime" << endl;
-	//findPath->breathSearch(); // cauta in latime
-	//findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
-	//findPath->printTime();
-	//cout << endl;
-
-	//cout << "Cautare in adancime" << endl;
-	//findPath->depthSearch(); // cauta solutie in adancime
-	//findPath->printSolution();
-	//findPath->printTime();
-	//cout << endl;
-
 	cout << "Cautare bidirectionala" << endl;
 	findPath->bidirectionalSearch();
 	findPath->printSolution();
