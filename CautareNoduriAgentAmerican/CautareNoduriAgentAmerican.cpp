@@ -9,6 +9,7 @@ private:
 	int a[20][20];
 	int c[20][20];
 	int parents[20];
+	int h[20];
 	int startNode;
 	int targetNode;
 	bool solutionFound;
@@ -21,7 +22,7 @@ private:
 		cout << names[node] << " ";
 	}
 
-	void sortCostUniform(int *nodesTail, int nodesTailPos, int* cost) {
+	void sortCostUniform(int* nodesTail, int nodesTailPos, int* cost) {
 		for (int i = 0; i < nodesTailPos; i++) {
 			int min = cost[i];
 			int pozMin = i;
@@ -36,6 +37,19 @@ private:
 			int tmp = nodesTail[i];
 			nodesTail[i] = nodesTail[pozMin];
 			nodesTail[pozMin] = tmp;
+		}
+	}
+
+	void sortareCautareGreedy(int nodes[20], int numarDeNoduri) {
+		// sortez tabloul nodes descrescator in functie de h
+		
+		for (int i = 0; i < numarDeNoduri; i++) {
+			for (int j = i + 1; j < numarDeNoduri; j++)
+				if (h[nodes[i]] < h[nodes[j]]) {
+					int max = nodes[i];
+					nodes[i] = nodes[j];
+					nodes[j] = max;
+				}
 		}
 	}
 
@@ -98,11 +112,11 @@ public:
 		c[4][7] = 800;
 		c[5][15] = 900;
 		c[7][17] = 900;
-	    c[8][18] = 1200;
+		c[8][18] = 1200;
 		c[8][11] = 700;
 		c[9][10] = 400;
 		c[9][16] = 1000;
-	    c[12][19] = 700;
+		c[12][19] = 700;
 		c[12][15] = 2500;
 		c[13][14] = 1300;
 		c[14][15] = 800;
@@ -113,6 +127,27 @@ public:
 					c[j][i] = c[i][j];
 			}
 		}
+
+		h[0] = 366;
+		h[1] = 0;
+		h[2] = 160;
+		h[3] = 242;
+		h[4] = 161;
+		h[5] = 176;
+		h[6] = 77;
+		h[7] = 151;
+		h[8] = 226;
+		h[9] = 244;
+		h[10] = 241;
+		h[11] = 234;
+		h[12] = 380;
+		h[13] = 10;
+		h[14] = 193;
+		h[15] = 253;
+		h[16] = 329;
+		h[17] = 80;
+		h[18] = 199;
+		h[19] = 374;
 	}
 
 	void readStartEndCities() {
@@ -295,6 +330,44 @@ public:
 		this->iterativeLimit = limit;
 	}
 
+	void cautareGreedy() {
+		int visitedCities[20];
+		int nodesStack[20];
+		int nodesStackPos = 0;
+		solutionFound = false;
+
+		for (int i = 0; i < 20; i++) {
+			visitedCities[i] = 0;
+			parents[i] = -1;
+		}
+		nodesStack[nodesStackPos] = startNode;
+		nodesStackPos++;
+		visitedCities[startNode] = 1;
+
+		while (!solutionFound) {
+			sortareCautareGreedy(nodesStack, nodesStackPos);
+
+			int node = nodesStack[nodesStackPos - 1];
+			nodesStackPos--;
+
+			if (node == targetNode) {
+				solutionFound = true;
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++) {
+					if (a[i][node] != 0 && visitedCities[i] == 0) {
+						nodesStack[nodesStackPos] = i;
+						nodesStackPos++;
+						parents[i] = node;
+						visitedCities[i] = 1;
+					}
+				}
+			}
+		}
+
+	}
+
 	void printSolution() {
 		if (solutionFound) {
 			this->printSolutionRec(targetNode);
@@ -369,10 +442,16 @@ int main()
 	//findPath->printTime();
 	//cout << endl;
 
-	cout << "Cautare cu adancime iterativa" << endl;
-	findPath->limitedDepthIterativeSearch(); 
+	//cout << "Cautare cu adancime iterativa" << endl;
+	//findPath->limitedDepthIterativeSearch(); 
+	//findPath->printSolution();
+	//findPath->printTime();
+	//cout << "Limita pentru cautarea in adancime iterativa: " << findPath->iterativeLimit;
+	//cout << endl;
+
+	cout << "Cautare Greedy" << endl;
+	findPath->cautareGreedy();
 	findPath->printSolution();
 	findPath->printTime();
-	cout << "Limita pentru cautarea in adancime iterativa: " << findPath->iterativeLimit;
 	cout << endl;
 }
