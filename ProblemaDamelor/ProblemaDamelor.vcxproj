@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{FEC1B9AB-5BC6-4463-8206-61501592E7E9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GenerarePermutariMetodaInteligenta</RootNamespace>
+    <RootNamespace>ProblemaDamelor</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GenerarePermutariMetodaInteligenta.cpp" />
+    <ClCompile Include="ProblemaDamelor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
