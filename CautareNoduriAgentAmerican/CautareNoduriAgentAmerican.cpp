@@ -415,39 +415,39 @@ int main()
 	findPath->readStartEndCities();
 	findPath->initializeAdiacenceMatrix(); // initializeaza matricea de adiacenta
 
-	//cout << "Cautare in latime" << endl;
-	//findPath->breathSearch(); // cauta in latime
-	//findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
-	//findPath->printTime();
-	//cout << endl;
+	cout << "Cautare in latime" << endl;
+	findPath->breathSearch(); // cauta in latime
+	findPath->printSolution(); // afiseaza solutia daca exista, altfel afiseaza un mesaj ca solutia nu exista
+	findPath->printTime();
+	cout << endl;
 
-	//cout << "Cautare in adancime" << endl;
-	//findPath->depthSearch(); // cauta solutie in adancime
-	//findPath->printSolution();
-	//findPath->printTime();
-	//cout << endl;
+	cout << "Cautare in adancime" << endl;
+	findPath->depthSearch(); // cauta solutie in adancime
+	findPath->printSolution();
+	findPath->printTime();
+	cout << endl;
 
-	//cout << "Cautare Cost Uniform" << endl;
-	//findPath->costUniform(); // cauta solutie cost uniform
-	//findPath->printSolution();
-	//findPath->printTime();
-	//cout << endl;
+	cout << "Cautare Cost Uniform" << endl;
+	findPath->costUniform(); // cauta solutie cost uniform
+	findPath->printSolution();
+	findPath->printTime();
+	cout << endl;
 
-	//int limit;
-	//cout << "Cautare limitata in adancime" << endl;
-	//cout << "Limita pentru cautare in adancime: ";
-	//cin >> limit;
-	//findPath->limitedDepthSearch(limit); // cauta solutie limitata in adancime
-	//findPath->printSolution();
-	//findPath->printTime();
-	//cout << endl;
+	int limit;
+	cout << "Cautare limitata in adancime" << endl;
+	cout << "Limita pentru cautare in adancime: ";
+	cin >> limit;
+	findPath->limitedDepthSearch(limit); // cauta solutie limitata in adancime
+	findPath->printSolution();
+	findPath->printTime();
+	cout << endl;
 
-	//cout << "Cautare cu adancime iterativa" << endl;
-	//findPath->limitedDepthIterativeSearch(); 
-	//findPath->printSolution();
-	//findPath->printTime();
-	//cout << "Limita pentru cautarea in adancime iterativa: " << findPath->iterativeLimit;
-	//cout << endl;
+	cout << "Cautare cu adancime iterativa" << endl;
+	findPath->limitedDepthIterativeSearch(); 
+	findPath->printSolution();
+	findPath->printTime();
+	cout << "Limita pentru cautarea in adancime iterativa: " << findPath->iterativeLimit;
+	cout << endl;
 
 	cout << "Cautare Greedy" << endl;
 	findPath->cautareGreedy();
