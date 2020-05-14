@@ -1,7 +1,6 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
-#include "ComisVoiajor.h"
 
 using namespace std;
 
@@ -96,6 +95,13 @@ void afisare(int* v, int n) {
 }
 
 int main() {
+	int n = 20;
+	int numarApeluriEvaluare = 0;
+	int* configuratie;
+	double timpTrecut;
+
+	time_t start, end;
+
 	time_t t;
 	srand((unsigned)(time(&t)));
 
@@ -106,24 +112,46 @@ int main() {
 		}
 	}
 
-	int n = 5;
-	int* configuratie = initializare(n);
 	int* configuratie1;
+	int* ceaMaiBunaConfiguratie = NULL;
 
-	cout << "Configuratia initiala: ";
-	afisare(configuratie, n);
-	cout << "Evaluare configuratia initiala: " << evaluare(configuratie, n) << endl;
-	int eval_curent;
+	int evaluareTinta = -1;
 
-	for (int i = 0; i < 1000; i++) {
-		eval_curent = evaluare(configuratie, n);
-		configuratie1 = variatie(configuratie, n);
-		if (evaluare(configuratie1, n) < eval_curent) {
-			configuratie = configuratie1;
+	time(&start);
+
+	do {
+		configuratie = initializare(n);
+		numarApeluriEvaluare++;
+
+		int eval_curent;
+		numarApeluriEvaluare++;
+		for (int i = 0; i < 1000; i++) {
+			eval_curent = evaluare(configuratie, n);
+			if (eval_curent < evaluareTinta || evaluareTinta == -1) {
+				evaluareTinta = eval_curent * 0.8; // incercam sa imbunatatim cu 20%
+				ceaMaiBunaConfiguratie = configuratie;
+			}
+			configuratie1 = variatie(configuratie, n);
+			numarApeluriEvaluare++;
+			if (evaluare(configuratie1, n) < eval_curent) {
+				evaluareTinta = eval_curent * 0.8; // incercam sa imbunatatim cu 20%
+				configuratie = configuratie1;
+				ceaMaiBunaConfiguratie = configuratie1;
+			}
 		}
-	};
+		time(&end);
 
-	cout << "Configuratia finala: ";
-	afisare(configuratie, n);
-	cout << "Evaluare configuratia finala: " << evaluare(configuratie, n) << endl;
+		timpTrecut = end - start;
+		numarApeluriEvaluare += 2;
+	} while ((evaluareTinta < evaluare(configuratie, n)) && (numarApeluriEvaluare < 1000000) && (timpTrecut < 3));
+
+	cout << "Configuratie finala: ";
+	afisare(ceaMaiBunaConfiguratie, n);
+	cout << "Evaluare configuratie finala: " << evaluare(ceaMaiBunaConfiguratie, n) << endl;
+	cout << "Functia evaluare s-a apelat de: " << numarApeluriEvaluare << endl;
+	cout << "Timpul de executie: " << timpTrecut << endl;
+
+	cout << endl;
+	cout << "80% din evaluare configuratie finala: " << evaluare(ceaMaiBunaConfiguratie, n) * 0.8 << endl;
+	cout << "Evaluare tinta: " << evaluareTinta << endl;
 }
